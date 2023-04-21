@@ -1,0 +1,12 @@
+app {
+  background-color: #282c34;
+  color: #cfb66b;
+
+}
+
+.img-responsive {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%
+}
