@@ -1,9 +1,9 @@
 import React from "react";
 import Logo from '../img/AlarmSquad.png'
-import LoginForm from "../forms/loginForm";
+import RegisterForm from "../forms/registerForm";
 
 
-function Login() {
+function Register() {
   return (
     <>
       <div id="home">
@@ -14,10 +14,10 @@ function Login() {
         />  
       </div>
 
-      <LoginForm />
+      <RegisterForm />
 
     </>
   );
 }
 
-export default Login;
+export default Register;

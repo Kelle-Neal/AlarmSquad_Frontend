@@ -1,7 +1,8 @@
 import React from "react";
 import Logo from '../img/AlarmSquad.png';
 
-function Home() {
+
+function Home () {
   return (
     <>
       <div id="home">

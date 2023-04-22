@@ -1,9 +1,8 @@
 import React from "react";
-import Logo from '../img/AlarmSquad.png'
-import LoginForm from "../forms/loginForm";
+import Logo from '../img/AlarmSquad.png';
 
 
-function Login() {
+const Error = () => {
   return (
     <>
       <div id="home">
@@ -13,11 +12,12 @@ function Login() {
           className= 'img-responsive'
         />  
       </div>
-
-      <LoginForm />
-
+      
+      <div>
+        <h1>Error: Page Does Not Exist!</h1>
+      </div>
     </>
   );
 }
 
-export default Login;
+export default Error;

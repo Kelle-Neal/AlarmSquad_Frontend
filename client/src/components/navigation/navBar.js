@@ -1,34 +1,35 @@
-import { Link } from "react-router-dom";
-import { useGlobalState } from "../context/GlobalState";
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { useGlobalState } from "../../context/GlobalState";
 
 function NavBar() {
   //const [ state, dispatch ] = useGlobalState();
-  const [ state] = useGlobalState();
+  const [ state ] = useGlobalState();
 
   return (
     <nav>
       <ul style={{ display: "flex", flexFlow: "row nowrap", justifyContent: "space-evenly", listStyle: 'none' }}>
         <li>
-          <Link to="/">Home</Link>
+          <NavLink to="/">Home</NavLink>
         </li>
         {
           !state.currentUser && (
             <li>
-              <Link to="/login">Login</Link>
+              <NavLink to="/Login">Login</NavLink>
             </li>
           )
         }
         {
           !state.currentUser && (
             <li>
-              <Link to="/register">Register</Link>
+              <NavLink to="/Register">Register</NavLink>
             </li>
           )
         }
-        {
-          state.currentUser && (
+                {
+          !state.currentUser && (
             <li>
-              <Link to="/profile">Profile</Link>
+              <NavLink to="/Dashboard">Dashboard</NavLink>
             </li>
           )
         }
