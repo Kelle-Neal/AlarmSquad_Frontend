@@ -26,10 +26,17 @@ function NavBar() {
             </li>
           )
         }
-                {
+        {
           !state.currentUser && (
             <li>
               <NavLink to="/Dashboard">Dashboard</NavLink>
+            </li>
+          )
+        }
+        {
+          !state.currentUser && (
+            <li>
+              <NavLink to="/Alarm">New Alarm</NavLink>
             </li>
           )
         }

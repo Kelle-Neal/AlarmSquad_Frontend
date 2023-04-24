@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function Clock(){
+function CurrentTime(){
   const [date, setDate] = useState(new Date());
   
   function refreshClock() {
@@ -18,4 +18,4 @@ function Clock(){
     </span>
   );
 }
-export default Clock;
+export default CurrentTime;
