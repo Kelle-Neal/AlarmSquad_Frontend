@@ -5,6 +5,7 @@ import NavBar from './components/navigation/navBar.js';
 import Home from './components/pages/home.js';
 import Login from './components/pages/login.js';
 import Register from './components/pages/register.js';
+import Clock from './components/pieces/currentTime.js';
 // import Error from './components/pages/error.js';
 
 
@@ -13,6 +14,8 @@ function App() {
     <>
       <div className="App">
         <NavBar />
+        <Clock />
+        <Date />
         <Routes>
           <Route path="/" element={ <Home/> } />
           <Route path="login" element={ <Login/> } />
