@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom";
 
 import NavBar from './components/navigation/navBar.js';
 import Home from './components/pages/home.js';
@@ -8,12 +8,17 @@ import Register from './components/pages/register.js';
 
 import CurrentTime from './components/pieces/currentTime.js';
 import CurrentDate from './components/pieces/currentDate.js';
-import AlarmClock from './components/alarm/addAlarm.js';
+// import AlarmList from './components/alarm/alarmList.js';
+import NewAlarm from './components/alarm/addAlarm.js';
+
+import AlarmList from './components/alarm/alarmList.js';
 // import Error from './components/pages/error.js';
+
+// const BASE_URL = 'https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/api'
 
 
 function App() {
-  return (
+  return(
     <>
       <div className="App">
         <NavBar />
@@ -24,7 +29,8 @@ function App() {
           <Route path="/" element={ <Home/> } />
           <Route path="login" element={ <Login/> } />
           <Route path="register" element={ <Register/> } />
-          <Route path="alarm" element={ <AlarmClock/> } />
+          <Route path="dashboard" element={ <NewAlarm/> } />
+          <Route path="alarmList" element={ <AlarmList/> } />
           {/* <Route element={<Error/>}/> */}
         </Routes>
       </div> 

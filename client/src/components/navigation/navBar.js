@@ -36,7 +36,7 @@ function NavBar() {
         {
           !state.currentUser && (
             <li>
-              <NavLink to="/Alarm">New Alarm</NavLink>
+              <NavLink to="/AlarmList">Alarms</NavLink>
             </li>
           )
         }
