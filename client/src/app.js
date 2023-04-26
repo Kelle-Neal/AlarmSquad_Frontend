@@ -12,6 +12,8 @@ import CurrentDate from './components/pieces/currentDate.js';
 import NewAlarm from './components/alarm/addAlarm.js';
 
 import AlarmList from './components/alarm/alarmList.js';
+import AlarmGroups from './components/pages/alarmGroups.js';
+
 // import Error from './components/pages/error.js';
 
 // const BASE_URL = 'https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/api'
@@ -29,8 +31,11 @@ function App() {
           <Route path="/" element={ <Home/> } />
           <Route path="login" element={ <Login/> } />
           <Route path="register" element={ <Register/> } />
-          <Route path="dashboard" element={ <NewAlarm/> } />
+          <Route path="newAlarm" element={ <NewAlarm/> } />
           <Route path="alarmList" element={ <AlarmList/> } />
+          <Route path="Alarm Groups" element={ <AlarmGroups/> } />
+
+
           {/* <Route element={<Error/>}/> */}
         </Routes>
       </div> 

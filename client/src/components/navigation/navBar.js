@@ -4,7 +4,7 @@ import { useGlobalState } from "../../context/GlobalState";
 
 function NavBar() {
   //const [ state, dispatch ] = useGlobalState();
-  const [ state ] = useGlobalState();
+  const [state] = useGlobalState();
 
   return (
     <nav>
@@ -12,37 +12,32 @@ function NavBar() {
         <li>
           <NavLink to="/">Home</NavLink>
         </li>
-        {
-          !state.currentUser && (
-            <li>
-              <NavLink to="/Login">Login</NavLink>
-            </li>
-          )
-        }
-        {
-          !state.currentUser && (
-            <li>
-              <NavLink to="/Register">Register</NavLink>
-            </li>
-          )
-        }
-        {
-          !state.currentUser && (
-            <li>
-              <NavLink to="/Dashboard">Dashboard</NavLink>
-            </li>
-          )
-        }
-        {
-          !state.currentUser && (
-            <li>
-              <NavLink to="/AlarmList">Alarms</NavLink>
-            </li>
-          )
-        }
-      </ul>
-    </nav>
-  );
+        {!state.currentUser && (
+          <li>
+            <NavLink to="/Login">Login</NavLink>
+          </li>)}
+        {!state.currentUser && (
+          <li>
+            <NavLink to="/Register">Register</NavLink>
+          </li>)}
+        {!state.currentUser && (
+          <li>
+            <NavLink to="/NewAlarm">New Alarm</NavLink>
+          </li>)}
+        {!state.currentUser && (
+          <li>
+            <NavLink to="/AlarmList">Alarm List</NavLink>
+          </li>)}
+        {!state.currentUser && (
+          <li>
+            <NavLink to="/AlarmGroups">Alarm Groups</NavLink>
+          </li>)}
+
+
+
+            </ul>
+          </nav>
+        );
 }
 
-export default NavBar;
+        export default NavBar;

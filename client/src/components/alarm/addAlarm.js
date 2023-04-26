@@ -51,7 +51,7 @@ function NewAlarm() {
   return (
     <div>
       <h1>Add new alarm...</h1>
-      <input type="text" value={alarmName} onChange={handleNameChange} placeholder="Enter alarm name" />
+      <input type="text" value={alarmName} onChange={handleNameChange} placeholder="Enter Alarm Name" />
       <select value={alarmTime.hour} onChange={handleHourChange}>
         <option value="">Hour</option>
         {hours.map(hour => (
