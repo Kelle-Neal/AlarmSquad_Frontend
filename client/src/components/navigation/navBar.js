@@ -16,28 +16,36 @@ function NavBar() {
           <li>
             <NavLink to="/Login">Login</NavLink>
           </li>)}
+
         {!state.currentUser && (
           <li>
             <NavLink to="/Register">Register</NavLink>
           </li>)}
+
         {!state.currentUser && (
           <li>
             <NavLink to="/NewAlarm">New Alarm</NavLink>
           </li>)}
+
         {!state.currentUser && (
           <li>
             <NavLink to="/AlarmList">Alarm List</NavLink>
           </li>)}
+
         {!state.currentUser && (
           <li>
             <NavLink to="/AlarmGroups">Alarm Groups</NavLink>
           </li>)}
 
+          {!state.currentUser && (
+          <li>
+            <NavLink to="/AlarmGroupList">Alarm Group List</NavLink>
+          </li>)}
 
 
-            </ul>
-          </nav>
-        );
+      </ul>
+    </nav>
+  );
 }
 
-        export default NavBar;
+export default NavBar;

@@ -10,7 +10,7 @@ class AlarmList extends React.Component {
 
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/alarms/')
 		.then(res => {
 			let data = res.data.results;
@@ -30,6 +30,13 @@ render() {
 			<div >
 				<div >
 						<h1>{alarm.alarmName}" - "{alarm.alarmTime}</h1>
+            <button
+              onClick={() => {
+                this.setState({ editing: true });
+              }}
+            >
+              Edit
+            </button>			
 				</div>
 			</div>
 			</div>

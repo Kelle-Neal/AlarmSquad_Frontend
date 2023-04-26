@@ -1,7 +1,8 @@
 import React from "react";
 import Logo from '../img/AlarmSquad.png'
+
 import NewAlarmGroup from '../alarm/addAlarmGroup';
-import NewAlarm from "../alarm/addAlarm";
+import AlarmGroupList from "../alarm/alarmGroupList";
 
 function AlarmGroups() {
   return(
@@ -10,11 +11,11 @@ function AlarmGroups() {
         <img
           alt="AlarmSquad Logo"
           src={ Logo }
-          className= 'img-responsive'
-        />
+          className= 'img-responsive'/>
       </div>
+      
       <NewAlarmGroup />
-      <NewAlarm />
+      <AlarmGroupList />
 
     </>
   );

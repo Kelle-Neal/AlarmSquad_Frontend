@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import NewAlarm from './addAlarm';
 
 function NewAlarmGroup() {
   const [alarmGroupName, setAlarmGroupName] = useState('');
@@ -26,19 +25,14 @@ function NewAlarmGroup() {
   };
   console.log(savedAlarmGroups);
 
+
+
   return (
     <>
       <h1>Add New Alarm Group...</h1>
       <input type="text" value={alarmGroupName} onChange={handleNameChange} 
       placeholder='Enter Alarm Group Name'/>
-      <NewAlarm />
       <button onClick={handleSave}>Save</button>
-
-      <ul>
-        {savedAlarmGroups.map(alarmGroup => (
-          <li key={alarmGroup.id}>{alarmGroup.aGroupName}</li>
-        ))}
-      </ul>
     </>
   );
 
@@ -48,3 +42,5 @@ function NewAlarmGroup() {
 }
 
 export default NewAlarmGroup;
+
+
