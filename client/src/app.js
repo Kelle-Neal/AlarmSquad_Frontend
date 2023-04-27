@@ -16,6 +16,7 @@ import CurrentDate from './components/pieces/currentDate.js';
 import NewAlarm from './components/alarm/addAlarm.js';
 import AlarmList from './components/alarm/alarmList.js';
 import AlarmGroupList from './components/alarm/alarmGroupList.js';
+import Alarms2 from './components/pages/alarms.js';
 
 function App() {
   return(
@@ -33,6 +34,7 @@ function App() {
           <Route path="alarmList" element={ <AlarmList /> } />
           <Route path="alarmGroups" element={ <AlarmGroups /> } />
           <Route path="alarmGroupList" element={ <AlarmGroupList /> } />
+          <Route path="alarms2" element={ <Alarms2 /> } />
 
         </Routes>
       </div> 

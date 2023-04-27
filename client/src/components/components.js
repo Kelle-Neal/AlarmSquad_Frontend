@@ -18,7 +18,7 @@ class CustomModal extends Component {
 constructor(props) {
 	super(props);
 	this.state = {
-	activeItem: this.props.activeItem
+	activeAlarm: this.props.activeAlarm
 	};
 }
 // changes handler to check if a checkbox is checked or not
@@ -27,8 +27,8 @@ handleChange = e => {
 	if (e.target.type === "checkbox") {
 	value = e.target.checked;
 	}
-	const activeItem = { ...this.state.activeItem, [name]: value };
-	this.setState({ activeItem });
+	const activeAlarm = { ...this.state.activeAlarm, [name]: value };
+	this.setState({ activeAlarm });
 };
 
 // rendering modal in the custommodal class received toggle and on save as props,
@@ -45,7 +45,7 @@ render() {
 			<Input
 				type="text"
 				name="name"
-				value={this.state.activeItem.name}
+				value={this.state.activeAlarm.name}
 				onChange={this.handleChange}
 				placeholder="Enter Alarm Title"
 			/>
@@ -56,7 +56,7 @@ render() {
 			<Input
 				type='datetime-local'
 				name="TimeOfAlarm"
-				value={this.state.activeItem.time}
+				value={this.state.activeAlarm.time}
 				onChange={this.handleChange}
 				placeholder="Enter Alarm Time"
 			/>
@@ -65,7 +65,7 @@ render() {
 		</ModalBody>
 		{/* create a modal footer */}
 		<ModalFooter>
-		<Button color="success" onClick={() => onSave(this.state.activeItem)}>
+		<Button color="success" onClick={() => onSave(this.state.activeAlarm)}>
 			Save
 		</Button>
 		</ModalFooter>

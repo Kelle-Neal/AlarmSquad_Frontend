@@ -33,7 +33,7 @@ function NewAlarm() {
     };
 
     axios
-      .post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/alarms/", newAlarm)
+      .post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/", newAlarm)
       .then((res) => {
         let data = res.data;
         setSavedAlarms([...savedAlarms, data]);
@@ -76,6 +76,7 @@ function NewAlarm() {
           <li key={alarm.id}>{alarm.alarmName} - {alarm.alarmTime}</li>
         ))}
       </ul>
+      
     </div>
   );
 }

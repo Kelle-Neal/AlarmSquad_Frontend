@@ -11,7 +11,7 @@ class AlarmGroupList extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/alarmGroups/')
+		axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/')
 		.then(res => {
 			let data = res.data.results;
 			this.setState({

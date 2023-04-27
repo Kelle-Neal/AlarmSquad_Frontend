@@ -11,15 +11,15 @@ class AlarmList extends React.Component {
 	}
 
 	async componentDidMount() {
-		axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/alarms/')
+		axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/')
 		.then(res => {
 			let data = res.data.results;
 			this.setState({
 				alarms : data	
 			});
 		})
-		.catch(err => {})
-	}
+		.catch(err => console.log(err));
+	};
 
 render() {
 	console.log(this.state);
@@ -74,7 +74,7 @@ export default AlarmList;
 // import { useState, useEffect } from 'react'
 // import axios from 'axios';
 
-// const BASE_URL = 'https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/api'
+// const BASE_URL = 'https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/api'
 
 // function AlarmList() {
 //   const [alarms, setAlarms] = useState([]);

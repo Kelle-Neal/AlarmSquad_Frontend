@@ -1,11 +1,11 @@
 
 
-function AddAlarmInGroup() {
+// function AddAlarmInGroup() {
 
-const [selectedAlarmGroup, setSelectedAlarmGroup] = useState(null);
+// const [selectedAlarmGroup, setSelectedAlarmGroup] = useState(null);
 
-const handleAlarmGroupClick = (alarmGroupName) => {
-  setSelectedAlarmGroup(alarmGroupName);
+// const handleAlarmGroupClick = (alarmGroupName) => {
+//   setSelectedAlarmGroup(alarmGroupName);
 
-};
-}
+// };
+// }

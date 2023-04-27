@@ -42,6 +42,11 @@ function NavBar() {
             <NavLink to="/AlarmGroupList">Alarm Group List</NavLink>
           </li>)}
 
+          {!state.currentUser && (
+          <li>
+            <NavLink to="/Alarms2">Alarm List Test</NavLink>
+          </li>)}          
+
 
       </ul>
     </nav>

@@ -15,7 +15,7 @@ function NewAlarmGroup() {
     };
 
   axios
-  .post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/alarmGroups/", newAlarmGroup)
+  .post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/", newAlarmGroup)
   .then((res) => {
     let data = res.data;
     setSavedAlarmGroups([...savedAlarmGroups, data]);
