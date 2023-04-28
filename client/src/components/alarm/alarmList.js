@@ -8,13 +8,13 @@ function AlarmList() {
 
   useEffect(() => {
     axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/')
-		.then(response => {
-      setGroups(response.data);
-    });
+      .then(response => {
+        setGroups(response.data);
+      });
     axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/')
-		.then(response => {
-      setAlarms(response.data);
-    });
+      .then(response => {
+        setAlarms(response.data);
+      });
   }, []);
 
   const handleToggle = (event, id) => {
@@ -28,12 +28,16 @@ function AlarmList() {
 
   const handleEdit = (event, id) => {
     event.preventDefault();
-    window.location.href = `/alarms/${id}/edit/`;
+    window.location.href = `https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/edit/`;
   };
+  
+
+  const alarmsWithoutGroup = alarms.filter(alarm => !alarm.alarmGroup);
 
   return (
+    <>
     <div>
-      <h1>Alarm List</h1>
+      <h1>Alarm Groups</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -72,12 +76,141 @@ function AlarmList() {
             </React.Fragment>
           ))}
         </tbody>
-      </Table>
+      </Table>  
     </div>
+
+    <br></br>
+
+    <div>
+      <h1>Individual Alarms</h1>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Time</th>
+            <th>Enabled</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+          <tbody>
+            {alarmsWithoutGroup.map(alarm => (
+              <tr key={alarm.id}>
+                <td></td>
+                <td>{alarm.alarmName}</td>
+                <td>{alarm.alarmTime}</td>
+                <td>
+                  <Form.Check
+                    type="switch"
+                    id={`toggle-${alarm.id}`}
+                    label=""
+                    checked={alarm.alarmIsEnabled}
+                    onChange={event => handleToggle(event, alarm.id)}
+                  />
+                  </td>
+                  <td>
+                    <Button variant="primary" size="sm" onClick={event => handleEdit(event, alarm.id)}>Edit</Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>  
+      </div>
+    </>  
   );
 }
+export default AlarmList;      
 
-export default AlarmList;
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { Button, Table, Form } from 'react-bootstrap';
+// import axios from 'axios';
+
+// function AlarmList() {
+//   const [alarms, setAlarms] = useState([]);
+//   const [groups, setGroups] = useState([]);
+
+//   useEffect(() => {
+//     axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/')
+// 		.then(response => {
+//       setGroups(response.data);
+//     });
+//     axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/')
+// 		.then(response => {
+//       setAlarms(response.data);
+//     });
+//   }, []);
+
+//   const handleToggle = (event, id) => {
+//     event.preventDefault();
+//     const index = alarms.findIndex(alarm => alarm.id === id);
+//     const alarm = alarms[index];
+//     axios.patch(`/api/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled }).then(response => {
+//       setAlarms([...alarms.slice(0, index), response.data, ...alarms.slice(index + 1)]);
+//     });
+//   };
+
+//   const handleEdit = (event, id) => {
+//     event.preventDefault();
+//     window.location.href = `'https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/'${id}/edit/`;
+//   };
+
+//   return (
+//     <div>
+//       <h1>Alarm List</h1>
+//       <Table striped bordered hover>
+//         <thead>
+//           <tr>
+//             <th>Group</th>
+//             <th>Name</th>
+//             <th>Time</th>
+//             <th>Enabled</th>
+//             <th>Edit</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {groups.map(group => (
+//             <React.Fragment key={group.id}>
+//               <tr>
+//                 <td colSpan={5}><strong>{group.aGroupName}</strong></td>
+//               </tr>
+//               {alarms.filter(alarm => alarm.alarmGroup === group.id).map(alarm => (
+//                 <tr key={alarm.id}>
+//                   <td>{group.aGroupName}</td>
+//                   <td>{alarm.alarmName}</td>
+//                   <td>{alarm.alarmTime}</td>
+//                   <td>
+//                     <Form.Check
+//                       type="switch"
+//                       id={`toggle-${alarm.id}`}
+//                       label=""
+//                       checked={alarm.alarmIsEnabled}
+//                       onChange={event => handleToggle(event, alarm.id)}
+//                     />
+//                   </td>
+//                   <td>
+//                     <Button variant="primary" size="sm" onClick={event => handleEdit(event, alarm.id)}>Edit</Button>
+//                   </td>
+//                 </tr>
+//               ))}
+//             </React.Fragment>
+//           ))}
+//         </tbody>
+//       </Table>
+//     </div>
+//   );
+// }
+
+// export default AlarmList;
 
 
 

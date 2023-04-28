@@ -16,7 +16,8 @@ import NewAlarm from './components/alarm/addAlarm.js';
 import AlarmList from './components/alarm/alarmList.js';
 import AlarmGroupList from './components/alarm/alarmGroupList.js';
 import SelectAlarmGroup from './components/selectFields/selectAlarmGroup.js';
-import NewAlarmForm from './components/forms/newAlarm.js';
+import FormNewAlarm from './components/forms/newAlarm.js';
+import FormEditAlarm from './components/forms/editAlarm.js';
 // import NewAlarmForm from './components/forms/newAlarm.js';
 
 function App() {
@@ -36,7 +37,9 @@ function App() {
           <Route path="alarmGroups" element={ <AlarmGroups /> } />
           <Route path="alarmGroupList" element={ <AlarmGroupList /> } />
           <Route path="selectAlarmGroup" element={ <SelectAlarmGroup /> } />
-          <Route path="newAlarmForm" element={ <NewAlarmForm /> } />
+          <Route path="formNewAlarm" element={ <FormNewAlarm /> } />
+          <Route path="formEditAlarm" element={ <FormEditAlarm /> } />
+
 
 
         </Routes>

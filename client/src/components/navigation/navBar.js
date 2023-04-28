@@ -49,8 +49,13 @@ function NavBar() {
 
           {!state.currentUser && (
           <li>
-            <NavLink to="/NewAlarmForm">New Alarm Form</NavLink>
+            <NavLink to="/FormNewAlarm">New Alarm Form</NavLink>
           </li>)}         
+
+          {!state.currentUser && (
+          <li>
+            <NavLink to="/FormEditAlarm">Edit Alarm</NavLink>
+          </li>)}   
 
       </ul>
     </nav>
