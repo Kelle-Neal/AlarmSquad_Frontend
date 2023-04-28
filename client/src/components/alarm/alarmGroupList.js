@@ -10,7 +10,7 @@ class AlarmGroupList extends React.Component {
 
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/')
 		.then(res => {
 			let data = res.data.results;
@@ -18,8 +18,8 @@ class AlarmGroupList extends React.Component {
 				alarmGroups : data	
 			});
 		})
-		.catch(err => {})
-	}
+		.catch(err => console.log(err));
+	};
 
 render() {
 	console.log(this.state);
@@ -29,7 +29,7 @@ render() {
 			<div key={id}>
 			<div >
 				<div >
-						<h1>{alarmGroup.aGroupName}</h1>
+					<h1>{alarmGroup.aGroupName}</h1>
 				</div>
 			</div>
 			</div>
