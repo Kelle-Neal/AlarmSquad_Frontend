@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Table, Form } from 'react-bootstrap';
 import axios from 'axios';
 
+
 function AlarmList() {
   const [alarms, setAlarms] = useState([]);
   const [groups, setGroups] = useState([]);
@@ -21,7 +22,7 @@ function AlarmList() {
     event.preventDefault();
     const index = alarms.findIndex(alarm => alarm.id === id);
     const alarm = alarms[index];
-    axios.patch(`/api/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled }).then(response => {
+    axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled }).then(response => {
       setAlarms([...alarms.slice(0, index), response.data, ...alarms.slice(index + 1)]);
     });
   };

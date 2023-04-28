@@ -23,9 +23,10 @@ class AlarmGroupList extends React.Component {
 
 render() {
 	console.log(this.state);
+	const { alarmGroups = [] } = this.state;
 	return(
 		<>
-			{this.state.alarmGroups.map((alarmGroup, id) => (
+			{alarmGroups.map((alarmGroup, id) => (
 			<div key={id}>
 			<div >
 				<div >

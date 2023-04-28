@@ -6,3 +6,13 @@ export default axios.create({
     "Content-type": "application/json"
   }
 });
+
+
+// const instance = axios.create({
+//   baseURL: "https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/",
+//   headers: {
+//     "Content-type": "application/json"
+//   }
+// });
+
+// export default instance;
