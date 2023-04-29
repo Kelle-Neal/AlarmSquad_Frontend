@@ -5,8 +5,3 @@ tasks:
   - init: bash .devcontainer/onCreateCommand.sh
     command: bash .devcontainer/postStartCommand.sh && bash && exit
 
-ports:
-  - port: 3000
-    visibility: public
-
-    
