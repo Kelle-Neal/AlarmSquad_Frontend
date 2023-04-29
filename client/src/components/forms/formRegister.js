@@ -8,7 +8,7 @@ import RegisterButton from '../buttons/registerButton';
 
 
 
-function RegisterForm() {
+function FormRegister() {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -101,6 +101,6 @@ function RegisterForm() {
 }
 
 
-export default RegisterForm;
+export default FormRegister;
 
 // render(<RegisterForm />);

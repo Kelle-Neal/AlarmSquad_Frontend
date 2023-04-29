@@ -14,12 +14,12 @@ function NavBar() {
         </li>
         {!state.currentUser && (
           <li>
-            <NavLink to="/Login">Login</NavLink>
+            <NavLink to="/FormLogin">Login</NavLink>
           </li>)}
 
         {!state.currentUser && (
           <li>
-            <NavLink to="/Register">Register</NavLink>
+            <NavLink to="/formRegister">Register</NavLink>
           </li>)}
 
         {!state.currentUser && (

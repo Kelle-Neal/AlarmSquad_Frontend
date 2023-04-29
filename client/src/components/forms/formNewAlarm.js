@@ -27,7 +27,7 @@ function FormNewAlarm({ alarm }) {
 
 // ************* GET ALARM GROUP DATA *************
 useEffect(() => {
-  axios.get("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/")
+  axios.get("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarmGroups/")
     .then((response) => {
       setAlarmGroups(response.data);
     })
@@ -39,7 +39,7 @@ console.log('alarmGroups:', alarmGroups)
 
 // ************* GET RINGTONE DATA *************
 useEffect(() => {
-  axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/ringtones/')
+  axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/ringtones/')
     .then(response => {
       setRingtones(response.data);
     })
@@ -72,7 +72,7 @@ const handleSubmit = (event) => {
     audio.play();
   }
 
-  axios.post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/", newAlarm)
+  axios.post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarms/", newAlarm)
   .then((res) => {
     let data = res.data;
     setSavedAlarms([...savedAlarms, data]);

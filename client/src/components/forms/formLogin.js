@@ -3,7 +3,7 @@ import LoginButton from "../buttons/loginButton";
 
 
 
-function LoginForm() {
+function FormLogin() {
   return (
     <>
 
@@ -28,4 +28,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default FormLogin;
