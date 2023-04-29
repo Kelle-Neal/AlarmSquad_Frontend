@@ -3,14 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { Form, FormGroup, FormControl, Button } from 'react-bootstrap';
 import moment from 'moment';
 
+
 function FormEditAlarm({ alarm, onClose }) {
-  const [alarmGroup, setAlarmGroup] = useState(alarm.alarmGroup);
-  const [alarmGroups, setAlarmGroups] = useState([]);
-  const [ringtone, setRingtone] = useState(alarm.ringtone.name);
-  const [ringtones, setRingtones] = useState([]);
-  const [alarmName, setAlarmName] = useState(alarm.alarmName);
-  const [alarmTime, setAlarmTime] = useState({ hour: '', minute: '', ampm: '' });
-  const [alarmIsEnabled, setAlarmIsEnabled] = useState(alarm.isEnabled);
+  const [alarmGroup, setAlarmGroup] = useState(alarm.alarmGroup || '');
+  const [alarmGroups, setAlarmGroups] = useState(alarm.alarmGroups || []);
+  const [ringtone, setRingtone] = useState(alarm.ringtone || '');
+  const [ringtones, setRingtones] = useState(alarm.ringtones || []);
+  const [alarmName, setAlarmName] = useState(alarm.alarmName || '');
+  const [alarmTime, setAlarmTime] = useState(alarm.alarmTime || { hour: '01', minute: '00', ampm: 'AM' });
+  const [alarmIsEnabled, setAlarmIsEnabled] = useState(alarm.alarmIsEnabled || true);
   const [savedAlarms, setSavedAlarms] = useState([]);
 
   const handleNameChange = (e) => {
@@ -50,8 +51,9 @@ useEffect(() => {
 console.log('ringtones:', ringtones);
 
 // ************* EDIT ALARM *************
-const handleEdit = (event) => {
+const handleEdit = (event, id) => {
   event.preventDefault();
+  window.location.href = `https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/edit/`;
   const { hour, minute, ampm } = alarmTime;
   const time = `${ampm === "AM" ? hour : parseInt(hour) + 12}:${minute}`;
   const updatedAlarm = {
@@ -60,7 +62,7 @@ const handleEdit = (event) => {
     alarmTime: time,
     alarmIsEnabled: alarmIsEnabled,
     alarmGroup: alarmGroup,
-    ringtone: { name: ringtone, url: '' },
+    ringtone: ringtone,
   };
   console.log('updatedAlarm:', updatedAlarm)
 
@@ -71,9 +73,8 @@ const handleEdit = (event) => {
     const audio = new Audio(selectedRingtone.url);
     audio.play();
   }
-  onClose();
 
-  axios.put("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${alarm.id}/", updatedAlarm)
+  axios.put(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${alarm.id}`, updatedAlarm)
   .then((res) => {
     let data = res.data;
     setSavedAlarms([...savedAlarms, data]);
@@ -82,21 +83,22 @@ const handleEdit = (event) => {
   .catch((error) => {
     console.error("Error editing alarm:", error);
   });
+  onClose();
 };
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // const updatedAlarm = {
-    //   alarmName: alarmName,
-    //   alarmDate: moment().format("YYYY-MM-DD"),
-    //   alarmTime: time,
-    //   alarmIsEnabled: alarmIsEnabled,
-    //   alarmGroup: alarmGroup,
-    //   ringtone: { name: ringtone, url: '' },
-    // };
-    handleEdit([]);
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+  // const updatedAlarm = {
+  //   alarmName: alarmName,
+  //   alarmDate: moment().format("YYYY-MM-DD"),
+  //   alarmTime: time,
+  //   alarmIsEnabled: alarmIsEnabled,
+  //   alarmGroup: alarmGroup,
+  //   ringtone: { name: ringtone, url: '' },
+  // };
+  handleEdit([]);
+};
 
   const hours = [...Array(12).keys()].map(hour => (hour + 1).toString().padStart(2, '0'));
   const minutes = [...Array(60).keys()].map(minute => minute.toString().padStart(2, '0'));

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Form } from 'react-bootstrap';
+import { Button, Table, Form, } from 'react-bootstrap';
 import axios from 'axios';
-
 
 function AlarmList() {
   const [alarms, setAlarms] = useState([]);

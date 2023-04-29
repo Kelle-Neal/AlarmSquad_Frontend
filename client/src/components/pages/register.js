@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from '../img/AlarmSquad.png'
-import RegisterForm from "../forms/registerForm";
+import RegisterForm from "../forms/formRegister";
 
 
 function Register() {

@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from '../img/AlarmSquad.png'
-import LoginForm from "../forms/loginForm";
+import LoginForm from "../forms/formLogin";
 
 
 function Login() {
