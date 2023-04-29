@@ -12,7 +12,7 @@ class FormNewAlarm extends React.Component {
 		let data;
 
 		axios
-			.get("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/api/alarms/")
+			.get("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/api/alarms/")
 			.then((res) => {
 				data = res.data;
 				this.setState({
@@ -51,7 +51,7 @@ class FormNewAlarm extends React.Component {
 		e.preventDefault();
 
 		axios
-			.post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us95.gitpod.io/api/alarms/", {
+			.post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/api/alarms/", {
 				name: this.state.label,
 				time: this.state.whatTime,
 			})

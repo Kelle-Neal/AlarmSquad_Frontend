@@ -14,30 +14,52 @@ function NavBar() {
         </li>
         {!state.currentUser && (
           <li>
-            <NavLink to="/Login">Login</NavLink>
+            <NavLink to="/FormLogin">Login</NavLink>
           </li>)}
+
         {!state.currentUser && (
           <li>
-            <NavLink to="/Register">Register</NavLink>
+            <NavLink to="/formRegister">Register</NavLink>
           </li>)}
+
         {!state.currentUser && (
           <li>
             <NavLink to="/NewAlarm">New Alarm</NavLink>
           </li>)}
+
         {!state.currentUser && (
           <li>
             <NavLink to="/AlarmList">Alarm List</NavLink>
           </li>)}
+
         {!state.currentUser && (
           <li>
             <NavLink to="/AlarmGroups">Alarm Groups</NavLink>
           </li>)}
 
+          {!state.currentUser && (
+          <li>
+            <NavLink to="/AlarmGroupList">Alarm Group List</NavLink>
+          </li>)}
 
+          {!state.currentUser && (
+          <li>
+            <NavLink to="/SelectAlarmGroup">Select Group</NavLink>
+          </li>)}          
 
-            </ul>
-          </nav>
-        );
+          {!state.currentUser && (
+          <li>
+            <NavLink to="/FormNewAlarm">New Alarm Form</NavLink>
+          </li>)}         
+
+          {!state.currentUser && (
+          <li>
+            <NavLink to="/FormEditAlarm">Edit Alarm</NavLink>
+          </li>)}   
+
+      </ul>
+    </nav>
+  );
 }
 
-        export default NavBar;
+export default NavBar;
