@@ -1,6 +1,10 @@
 import Form from 'react-bootstrap/Form';
 
 function IsEnabled() {
+  const [alarmIsEnabled, setAlarmIsEnabled] = useState(true);
+
+
+
   return (
     <Form>
       <Form.Check 

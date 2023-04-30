@@ -58,7 +58,6 @@ const handleSubmit = (event) => {
     alarmName: alarmName,
     alarmDate: moment().format("YYYY-MM-DD"),
     alarmTime: time,
-    alarmIsEnabled: alarmIsEnabled,
     alarmGroup: alarmGroup,
     ringtone: ringtone,
   };
@@ -169,18 +168,3 @@ const handleSubmit = (event) => {
 }
 
 export default FormNewAlarm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
