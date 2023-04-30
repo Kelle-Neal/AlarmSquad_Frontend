@@ -6,7 +6,7 @@ import { API_URL, REFRESH_ENDPOINT } from './auth.constants';
  * Create an Axios Client with defaults
  */
 const client = axios.create({
-  baseURL: API_URL,
+  baseURL: 'https://8000-kelleneal-alarmsquadbac-3pski8narsm.ws-us96b.gitpod.io/',
 });
 
 client.interceptors.response.use(

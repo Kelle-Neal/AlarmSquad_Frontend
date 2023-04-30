@@ -19,6 +19,7 @@ import FormNewAlarm from './components/forms/formNewAlarm.js';
 import FormEditAlarm from './components/forms/formEditAlarm.js';
 import FormRegister from './components/forms/formRegister.js';
 import FormLogin from './components/forms/formLogin.js';
+import TestForm from './stuff.js';
 // import NewAlarmForm from './components/forms/newAlarm.js';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="selectAlarmGroup" element={ <SelectAlarmGroup /> } />
           <Route path="formNewAlarm" element={ <FormNewAlarm /> } />
           <Route path="formEditAlarm" element={ <FormEditAlarm /> } />
+          <Route path="testForm" element={ <TestForm /> } />
 
 
 

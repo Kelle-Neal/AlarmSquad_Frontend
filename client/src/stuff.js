@@ -1,84 +1,179 @@
-// import React, { useState } from 'react';
-// import Button from 'react-bootstrap/Button';
-// import Modal from 'react-bootstrap/Modal';
+// ************* IMPORT TOOLS *************
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { FormControl } from 'react-bootstrap';
+import {
+  CDBInput,
+  CDBCard,
+  CDBCardBody,
+  CDBBtn,
+  CDBContainer,
+  CDBDropDown,
+  CDBDropDownMenu,
+  CDBDropDownToggle,
+} from 'cdbreact';
 
-// function FormLogin() {
-//   const [show, setShow] = useState(false);
-//   const handleClose = () => setShow(false);
-//   const handleShow = () => setShow(true);
+import CurrentTime from './components/pieces/currentTime'
+import CurrentDate from './components/pieces/currentDate';
 
+// ************* CREATE FORM FUNCTION *************
+function TestForm() {
+  const [alarmTime, setAlarmTime] = useState("");
+  const [alarmGroup, setAlarmGroup] = useState('');
+  const [alarmGroups, setAlarmGroups] = useState([]);
+  // const [ringtone, setRingtone] = useState('');
+  // const [ringtones, setRingtones] = useState([]);
+  const [alarmName, setAlarmName] = useState('');
+  const [savedAlarms, setSavedAlarms] = useState([]);
+  // const [alarmAlert, setAlarmAlert] = useState([]);
+  // const [isAlarmConfirmed, setIsAlarmConfirmed] = useState(false);
+  const [isAlarmActive, setIsAlarmActive] = useState(false);
+
+  const handleNameChange = (e) => {
+    setAlarmName(e.target.value);};
   
-  
+  // const formatAlarmTime = (timeString) => {
+  //   const date = new Date(`2022-01-01T${timeString}`);
+  //   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+  // };  
 
-//   return (
-//     <>
-//       <Button variant="primary" onClick={handleShow}>
-//         New Alarm
-//       </Button>
+// ************* GET ALARM GROUP DATA *************
+  useEffect(() => {
+    axios.get("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarmGroups/")
+      .then((response) => {
+        setAlarmGroups(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching alarm groups:", error);
+      });
+  }, []);
+  console.log('alarmGroups:', alarmGroups)
 
-//       <Modal
-//         show={show}
-//         onHide={handleClose}
-//         backdrop="static"
-//         keyboard={false}
-//       >
-//         <Modal.Header closeButton>
-//           <Modal.Title>Create New Alarm</Modal.Title>
-//         </Modal.Header>
+// // ************* GET RINGTONE DATA *************
+// useEffect(() => {
+//   axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/ringtones/')
+//     .then(response => {
+//       setRingtones(response.data);
+//     })
+//     .catch(error => {
+//       console.error('Error fetching ringtones:', error);
+//     });
+// }, []);
+// console.log('ringtones:', ringtones);
 
-//         <Modal.Body>
+// ************* CREATE NEW ALARM *************
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setIsAlarmActive(true);
+    // setIsAlarmConfirmed(true);
+    const time = alarmTime;
+    const newAlarm = {
+      alarmName: alarmName,
+      alarmTime: time,
+      // ringtone: ringtone,
+      alarmGroup: alarmGroup,
+    };
+    console.log('newAlarm:', newAlarm);
+
+// ************* SAVE NEW ALARM *************
+  axios.post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarms/", newAlarm)
+  .then((res) => {
+    let data = res.data;
+    setSavedAlarms([...savedAlarms, data]);
+    console.log('savedAlarms:', savedAlarms);
+  })
+  .catch((error) => {
+    console.error('There was a problem submitting the form:', error);
+  });
+  };
+ 
+  const checkAlarm = (currentTime) => {
+    if (alarmTime === currentTime && isAlarmActive) {
+      alert("It's Time!!");
+      setIsAlarmActive(false);
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const d = <CurrentTime />
+      const currentTime = d    
+      checkAlarm(currentTime);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isAlarmActive],);
 
 
-//         </Modal.Body>
-        
-//         <Modal.Footer>
-//           <Button variant="secondary" onClick={handleClose}>
-//             Close
-//           </Button>
-//           <Button variant="primary" onClick={handleCreateAlarm}>
-//             Understood
-//           </Button>
-//         </Modal.Footer>
-//       </Modal>
-//     </>
-//   );
-// }
+// ************* CREATE FORM *************
+  return (
+    <>
+      <CDBContainer Center>
+        <CDBCard style={{ width: '30rem' }}>
+          <CDBCardBody className="mx-4">
+            <div className="text-center mt-4 mb-2">
+              <p className="h4"> Create New Alarm </p>
+              <CurrentTime />
+              <CurrentDate />
+            </div>
+{/* ************* ALARM NAME ************* */}
+            <div>
+              <CDBInput 
+                label="Alarm Name" 
+                type="text" 
+                value={alarmName}
+                onChange={handleNameChange} />
+            </div>
 
-// render(<Example />);
+{/* ************* ALARM TIME ************* */}
+            <div>
+              <CDBInput
+                type="time"
+                id="alarm-time"
+                value={alarmTime}
+                onChange={(e) => setAlarmTime(e.target.value)}
+              />
+            </div>
 
+  {/* ************* ADD ALARM TO GROUP ************* */}
+            <div>
+              <CDBDropDown>
+                <CDBDropDownToggle color="secondary" outline>
+                  Add to Group
+                </CDBDropDownToggle>
+                <CDBDropDownMenu>
+                  <FormControl
+                    as="select"
+                    value={alarmGroup}
+                    onChange={(event) => setAlarmGroup(event.target.value)}>
+                    {alarmGroups.map((group) => (
+                      <option key={group.id} value={group.id}>
+                        {group.aGroupName}
+                      </option>
+                    ))}
+                  </FormControl>
+                </CDBDropDownMenu>
+              </CDBDropDown>
+            </div>
+            <br></br>
 
-
-
-
-
-// import Form from "react-bootstrap/Form";
-// import LoginButton from "../buttons/loginButton";
-
-
-
-// function FormLogin() {
-//   return (
-//     <>
-
-//       <Form>
-//         <Form.Group className='mb-3' controlId='formBasicEmail'>
-//           <Form.Label>Email Address</Form.Label>
-//           <Form.Control type='email' placeholder='Enter Email Address' />
-//           <Form.Text className='text-muted'>
-//             We will never share your information with anyone.
-//           </Form.Text>
-//         </Form.Group>
-
-//         <Form.Group className='mb-3' controlId='formBasicPassword'>
-//           <Form.Label>Password</Form.Label>
-//           <Form.Control type='password' placeholder='Enter Password' />
-//         </Form.Group>
-
-//         <LoginButton />
-
-//       </Form>
-//     </>
-//   );
-// }
-
-// export default FormLogin;
+  {/* ************* SAVE ALARM ************* */}
+            <div>
+              <CDBBtn
+                onClick={handleSubmit}
+                color="none"
+                style={{
+                  width: '30%',
+                  background:
+                    'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
+                className="btn-block mx-0">
+                Save Alarm
+              </CDBBtn>
+            </div>
+            <br></br>
+          </CDBCardBody>
+        </CDBCard>
+      </CDBContainer>
+    </>  
+  );
+} 
+export default TestForm;

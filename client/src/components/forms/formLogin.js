@@ -1,56 +1,54 @@
-import Form from "react-bootstrap/Form";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
+import React from 'react';
+import {
+  CDBInput,
+  CDBCard,
+  CDBCardBody,
+  CDBLink,
+  CDBBtn,
+  CDBContainer,
+} from 'cdbreact';
 
 function FormLogin() {
-  // const myModal = document.getElementById('myModal')
-  // const myInput = document.getElementById('myInput')
 
-  // myModal.addEventListener('shown.bs.modal', () => {
-  //   myInput.focus()
-  // })
-
-
+  const handleLogin = (event) => {
+    event.preventDefault();
+  };
 
   return (
-    <>
-      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Login
-      </button>
-
-      <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="staticBackdropLabel">Login</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div className="modal-body">
-              <Form>
-                <Form.Group className='mb-3' controlId='formBasicEmail'>
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control type='email' placeholder='Enter Email Address' />
-                </Form.Group>
-
-                <Form.Group className='mb-3' controlId='formBasicPassword'>
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type='password' placeholder='Enter Password' />
-                </Form.Group>
-              </Form>
-            </div>
-
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Login</button>
-            </div>
+    <CDBContainer>
+      <CDBCard style={{ width: '30rem' }}>
+        <CDBCardBody className="mx-4">
+          <div className="text-center mt-4 mb-2">
+            <p className="h4"> Login </p>
           </div>
-        </div>
-      </div>
-    </>  
-  );
-}
+          <CDBInput label="E-mail" type="email" />
+          <CDBInput label="Password" type="password" />
 
+          <div className="d-flex mt-4 align-items-center">
+            <CDBBtn
+              onClick={handleLogin}
+              color="none"
+              style={{
+                width: '30%',
+                background:
+                  'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',
+              }}
+              className="btn-block mx-0"
+            >
+              Login
+            </CDBBtn>
+            <p className="ms-auto mb-0">
+              Don't have an account?{' '}
+              <CDBLink className="d-inline p-0" to="https://3000-kelleneal-alarmsquadfro-sw7uxmgazln.ws-us96b.gitpod.io/formRegister">
+                Register
+              </CDBLink>
+            </p>
+          </div>
+          <br></br>
+
+        </CDBCardBody>
+      </CDBCard>
+    </CDBContainer>
+  );
+};
 export default FormLogin;

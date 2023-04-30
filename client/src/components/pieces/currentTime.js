@@ -14,7 +14,9 @@ function CurrentTime(){
   }, []);
   return (
     <span>
-      {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      <h5>{date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      </h5>
+      
     </span>
   );
 }

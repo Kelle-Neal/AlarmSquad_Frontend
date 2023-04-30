@@ -57,6 +57,11 @@ function NavBar() {
             <NavLink to="/FormEditAlarm">Edit Alarm</NavLink>
           </li>)}   
 
+          {!state.currentUser && (
+          <li>
+            <NavLink to="/TestForm">Test Form</NavLink>
+          </li>)}   
+
       </ul>
     </nav>
   );
