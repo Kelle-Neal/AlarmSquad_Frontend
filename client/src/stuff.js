@@ -1,45 +1,47 @@
-return (
-  <>
-    <Button variant="primary" onClick={() => setShowModal(true)}>
-      Create Alarm
-    </Button>
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-    <Modal show={showModal} onHide={() => setShowModal(false)}>
-      <Modal.Header closeButton>
-        <Modal.Title>Create Alarm</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={handleSubmit}>
-          <FormGroup>
-            <FormLabel>Alarm Name</FormLabel>
-            <FormControl type="text" value={alarmName} onChange={handleNameChange} />
-          </FormGroup>
+function FormLogin() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-          <FormGroup>
-            <FormLabel>Alarm Time</FormLabel>
-            <div className="d-flex align-items-center">
-              <FormControl as="select" value={alarmTime.hour} onChange={handleHourChange}>
-                {hours.map((hour) => (
-                  <option key={hour}>{hour}</option>
-                ))}
-              </FormControl>
-              <span>:</span>
-              <FormControl as="select" value={alarmTime.minute} onChange={handleMinuteChange}>
-                {minutes.map((minute) => (
-                  <option key={minute}>{minute}</option>
-                ))}
-              </FormControl>
-              <FormControl as="select" value={alarmTime.ampm} onChange={handleAmPmChange}>
-                {ampm.map((ampm) => (
-                  <option key={ampm}>{ampm}</option>
-                ))}
-              </FormControl>
-            </div>
-          </FormGroup>
+  
+  
 
-          <FormGroup>
-            <Form.Check
-              type="checkbox"
-              label="Enable Alarm"
-              checked={alarmIsEnabled}
-              onChange={(event)
+  return (
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        New Alarm
+      </Button>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Create New Alarm</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+
+
+        </Modal.Body>
+        
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleCreateAlarm}>
+            Understood
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
+
+render(<Example />);

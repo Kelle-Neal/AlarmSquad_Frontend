@@ -10,7 +10,6 @@ function FormNewAlarm({ alarm }) {
   const [ringtones, setRingtones] = useState([]);
   const [alarmName, setAlarmName] = useState('');
   const [alarmTime, setAlarmTime] = useState({ hour: '01', minute: '00', ampm: 'AM' });
-  const [alarmIsEnabled, setAlarmIsEnabled] = useState(true);
   const [savedAlarms, setSavedAlarms] = useState([]);
 
   const handleNameChange = (e) => {
@@ -56,11 +55,9 @@ const handleSubmit = (event) => {
   const time = `${ampm === "AM" ? hour : parseInt(hour) + 12}:${minute}`;
   const newAlarm = {
     alarmName: alarmName,
-    alarmDate: moment().format("YYYY-MM-DD"),
     alarmTime: time,
-    alarmIsEnabled: alarmIsEnabled,
-    alarmGroup: alarmGroup,
     ringtone: ringtone,
+    alarmGroup: alarmGroup,
   };
   console.log('newAlarm:', newAlarm);
 
@@ -121,16 +118,6 @@ const handleSubmit = (event) => {
         </FormControl>
       </FormGroup>
 
-      <FormGroup>
-        <Form.Label>Enable Alarm</Form.Label>
-        <Form.Check
-          type="checkbox"
-          checked={alarmIsEnabled}
-          onChange={event => setAlarmIsEnabled(event.target.checked)}
-        />
-        <span style={{ marginLeft: "8px" }}>Enabled</span>
-      </FormGroup>
-  
       <FormGroup>
         <Form.Label>Ringtone</Form.Label>
         <FormControl
