@@ -1,30 +1,48 @@
 import Form from "react-bootstrap/Form";
-import LoginButton from "../buttons/loginButton";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
 function FormLogin() {
   return (
     <>
+      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Login">
+        Login
+      </button>
 
-      <Form>
-        <Form.Group className='mb-3' controlId='formBasicEmail'>
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control type='email' placeholder='Enter Email Address' />
-          <Form.Text className='text-muted'>
-            We will never share your information with anyone.
-          </Form.Text>
-        </Form.Group>
+      <div className="modal fade" id="Login" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="LoginLabel">Login</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
-        <Form.Group className='mb-3' controlId='formBasicPassword'>
-          <Form.Label>Password</Form.Label>
-          <Form.Control type='password' placeholder='Enter Password' />
-        </Form.Group>
+            <div className="modal-body">
+              <Form>
+                <Form.Group className='mb-3' controlId='formBasicEmail'>
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control type='email' placeholder='Enter Email Address' />
+                  <Form.Text className='text-muted'>
+                    We will never share your information with anyone.
+                  </Form.Text>
+                </Form.Group>
 
-        <LoginButton />
-
-      </Form>
-    </>
+                <Form.Group className='mb-3' controlId='formBasicPassword'>
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type='password' placeholder='Enter Password' />
+                </Form.Group>
+              </Form>
+            </div>
+            
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" className="btn btn-primary">Login</button>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </>  
   );
 }
 
