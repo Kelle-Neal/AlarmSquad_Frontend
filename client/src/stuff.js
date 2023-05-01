@@ -1,179 +1,91 @@
-// ************* IMPORT TOOLS *************
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { FormControl } from 'react-bootstrap';
-import {
-  CDBInput,
-  CDBCard,
-  CDBCardBody,
-  CDBBtn,
-  CDBContainer,
-  CDBDropDown,
-  CDBDropDownMenu,
-  CDBDropDownToggle,
-} from 'cdbreact';
+import { CDBCard, CDBCardBody, CDBSwitch, CDBContainer } from 'cdbreact';
+import axios from 'axios';
 
-import CurrentTime from './components/pieces/currentTime'
-import CurrentDate from './components/pieces/currentDate';
-
-// ************* CREATE FORM FUNCTION *************
 function TestForm() {
-  const [alarmTime, setAlarmTime] = useState("");
-  const [alarmGroup, setAlarmGroup] = useState('');
-  const [alarmGroups, setAlarmGroups] = useState([]);
-  // const [ringtone, setRingtone] = useState('');
-  // const [ringtones, setRingtones] = useState([]);
-  const [alarmName, setAlarmName] = useState('');
-  const [savedAlarms, setSavedAlarms] = useState([]);
-  // const [alarmAlert, setAlarmAlert] = useState([]);
-  // const [isAlarmConfirmed, setIsAlarmConfirmed] = useState(false);
-  const [isAlarmActive, setIsAlarmActive] = useState(false);
+  const [alarms, setAlarms] = useState([]);
+  const [groups, setGroups] = useState([]);
 
-  const handleNameChange = (e) => {
-    setAlarmName(e.target.value);};
-  
-  // const formatAlarmTime = (timeString) => {
-  //   const date = new Date(`2022-01-01T${timeString}`);
-  //   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-  // };  
-
-// ************* GET ALARM GROUP DATA *************
   useEffect(() => {
-    axios.get("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarmGroups/")
-      .then((response) => {
-        setAlarmGroups(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching alarm groups:", error);
+    axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/')
+      .then(response => {
+        setGroups(response.data);
+      });
+    axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/')
+      .then(response => {
+        setAlarms(response.data);
       });
   }, []);
-  console.log('alarmGroups:', alarmGroups)
 
-// // ************* GET RINGTONE DATA *************
-// useEffect(() => {
-//   axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/ringtones/')
-//     .then(response => {
-//       setRingtones(response.data);
-//     })
-//     .catch(error => {
-//       console.error('Error fetching ringtones:', error);
-//     });
-// }, []);
-// console.log('ringtones:', ringtones);
+  // const handleToggle = (event, id) => {
+  //   event.preventDefault();
+  //   const index = alarms.findIndex(alarm => alarm.id === id);
+  //   const alarm = alarms[index];
+  //   axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
+  //     .then(response => {
+  //       setAlarms([...alarms.slice(0, index), response.data, ...alarms.slice(index + 1)]);
+  //     });
+  // };
 
-// ************* CREATE NEW ALARM *************
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setIsAlarmActive(true);
-    // setIsAlarmConfirmed(true);
-    const time = alarmTime;
-    const newAlarm = {
-      alarmName: alarmName,
-      alarmTime: time,
-      // ringtone: ringtone,
-      alarmGroup: alarmGroup,
-    };
-    console.log('newAlarm:', newAlarm);
+  // const handleEdit = (event, id) => {
+  //   event.preventDefault();
+  //   window.location.href = `https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/edit/`;
+  // };
 
-// ************* SAVE NEW ALARM *************
-  axios.post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarms/", newAlarm)
-  .then((res) => {
-    let data = res.data;
-    setSavedAlarms([...savedAlarms, data]);
-    console.log('savedAlarms:', savedAlarms);
-  })
-  .catch((error) => {
-    console.error('There was a problem submitting the form:', error);
-  });
-  };
- 
-  const checkAlarm = (currentTime) => {
-    if (alarmTime === currentTime && isAlarmActive) {
-      alert("It's Time!!");
-      setIsAlarmActive(false);
-    }
-  };
+  const alarmsWithoutGroup = alarms.filter(alarm => !alarm.alarmGroup);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const d = <CurrentTime />
-      const currentTime = d    
-      checkAlarm(currentTime);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [isAlarmActive],);
-
-
-// ************* CREATE FORM *************
   return (
     <>
-      <CDBContainer Center>
-        <CDBCard style={{ width: '30rem' }}>
-          <CDBCardBody className="mx-4">
-            <div className="text-center mt-4 mb-2">
-              <p className="h4"> Create New Alarm </p>
-              <CurrentTime />
-              <CurrentDate />
-            </div>
-{/* ************* ALARM NAME ************* */}
-            <div>
-              <CDBInput 
-                label="Alarm Name" 
-                type="text" 
-                value={alarmName}
-                onChange={handleNameChange} />
-            </div>
+      <CDBContainer>
+        {groups.map(group => (
+          <CDBCard 
+            style={{ width: "25rem" }}
+            key={group.id} 
+            className="mb-4">
+            <CDBCardBody>
+              title={group.alarmGroupName}
+                <div className="d-flex justify-content-center">
+                  <CDBSwitch />
+                    id={`group-${group.id}`}
+                    label="On/Off"
+                    checked={group.alarmGroupIsEnabled}
+                    onChange={() => {
+                      axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/${group.id}/`, { alarmGroupIsEnabled: !group.alarmGroupIsEnabled })
+                        .then(response => {
+                          setGroups(groups.map(g => g.id === group.id ? response.data : g));
+                        });
+                      }}
+                  <CDBSwitch checked />  
+                </div>
+            </CDBCardBody>
+          </CDBCard>))}
 
-{/* ************* ALARM TIME ************* */}
-            <div>
-              <CDBInput
-                type="time"
-                id="alarm-time"
-                value={alarmTime}
-                onChange={(e) => setAlarmTime(e.target.value)}
-              />
-            </div>
-
-  {/* ************* ADD ALARM TO GROUP ************* */}
-            <div>
-              <CDBDropDown>
-                <CDBDropDownToggle color="secondary" outline>
-                  Add to Group
-                </CDBDropDownToggle>
-                <CDBDropDownMenu>
-                  <FormControl
-                    as="select"
-                    value={alarmGroup}
-                    onChange={(event) => setAlarmGroup(event.target.value)}>
-                    {alarmGroups.map((group) => (
-                      <option key={group.id} value={group.id}>
-                        {group.aGroupName}
-                      </option>
-                    ))}
-                  </FormControl>
-                </CDBDropDownMenu>
-              </CDBDropDown>
-            </div>
-            <br></br>
-
-  {/* ************* SAVE ALARM ************* */}
-            <div>
-              <CDBBtn
-                onClick={handleSubmit}
-                color="none"
-                style={{
-                  width: '30%',
-                  background:
-                    'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
-                className="btn-block mx-0">
-                Save Alarm
-              </CDBBtn>
-            </div>
-            <br></br>
-          </CDBCardBody>
-        </CDBCard>
+        {alarmsWithoutGroup.map(alarm => (
+          <CDBCard 
+            style={{ width: "25rem" }}
+            key={alarm.id} 
+            className="mb-4">
+            <CDBCardBody>
+              title={alarm.alarmName}
+                <div className="d-flex justify-content-center">
+                  <CDBSwitch
+                    id={`alarm-${alarm.id}`}
+                    label="On/Off"
+                    checked={alarm.alarmIsEnabled}
+                    onChange={() => {
+                      axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/${alarm.id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
+                        .then(response => {
+                          setAlarms(alarms.map(a => a.id === alarm.id ? response.data : a));
+                        });
+                      }}
+                    />     
+                  <CDBSwitch checked />
+                </div>
+            </CDBCardBody>
+          </CDBCard>))}
       </CDBContainer>
     </>  
   );
-} 
+}
+
 export default TestForm;
