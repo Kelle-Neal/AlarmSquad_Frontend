@@ -11,13 +11,16 @@ import {
 
 function FormRegister() {
   
+  // const BASE_URL = 'https://primal-asset-385412.ue.r.appspot.com/'
+
   const handleRegister = (event) => {
     event.preventDefault();
   };
   
   return (
     <>
-      <CDBContainer Center>
+    <CDBContainer
+      className="d-flex justify-content-center">
         <CDBCard style={{ width: '30rem' }}>
           <CDBCardBody className="mx-4">
             <div className="text-center mt-4 mb-2">

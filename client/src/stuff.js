@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CDBCard, CDBCardBody, CDBSwitch, CDBContainer } from 'cdbreact';
+import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 
 function TestForm() {
@@ -7,25 +8,43 @@ function TestForm() {
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/')
+    axios.get('https://primal-asset-385412.ue.r.appspot.com/alarmGroups/')
       .then(response => {
         setGroups(response.data);
       });
-    axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/')
+    axios.get('https://primal-asset-385412.ue.r.appspot.com/alarms/')
       .then(response => {
         setAlarms(response.data);
       });
   }, []);
 
-  // const handleToggle = (event, id) => {
-  //   event.preventDefault();
-  //   const index = alarms.findIndex(alarm => alarm.id === id);
-  //   const alarm = alarms[index];
-  //   axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
-  //     .then(response => {
-  //       setAlarms([...alarms.slice(0, index), response.data, ...alarms.slice(index + 1)]);
-  //     });
-  // };
+    const handleAlarmEnabled = (event, id) => {
+      event.preventDefault();
+      const index = alarms.findIndex(alarm => alarm.id === id);
+      const alarm = alarms[index];
+      axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
+        .then(response => {
+          setAlarms([...alarms.slice(0, index), response.data, ...alarms.slice(index + 1)]);
+        });
+    };
+
+    const handleGroupEnabled = (event, id) => {
+      event.preventDefault();
+      const index = groups.findIndex(group => group.id === id);
+      const group = groups[index];
+      axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarmGroups/${id}/`, { aGroupIsEnabled: !group.aGroupIsEnabled })
+        .then(response => {
+          setGroups([...groups.slice(0, index), response.data, ...groups.slice(index + 1)]);
+        });
+    };
+
+    // axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarmGroups/${group.id}/`, { alarmGroupIsEnabled: !group.alarmGroupIsEnabled })
+    //   .then(response => {
+    //     setGroups(groups.map(g => g.id === group.id ? response.data : g));
+    //   });
+  
+
+
 
   // const handleEdit = (event, id) => {
   //   event.preventDefault();
@@ -35,30 +54,24 @@ function TestForm() {
   const alarmsWithoutGroup = alarms.filter(alarm => !alarm.alarmGroup);
 
   return (
-    <>
-      <CDBContainer>
+      <CDBContainer
+        className="justify-content-center">
         {groups.map(group => (
           <CDBCard 
-            style={{ width: "25rem" }}
-            key={group.id} 
-            className="mb-4">
+            key={`group-${group.id}`}
+            style={{ width: "25rem" }} border>
             <CDBCardBody>
-              title={group.alarmGroupName}
-                <div className="d-flex justify-content-center">
-                  <CDBSwitch />
-                    id={`group-${group.id}`}
-                    label="On/Off"
-                    checked={group.alarmGroupIsEnabled}
-                    onChange={() => {
-                      axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/${group.id}/`, { alarmGroupIsEnabled: !group.alarmGroupIsEnabled })
-                        .then(response => {
-                          setGroups(groups.map(g => g.id === group.id ? response.data : g));
-                        });
-                      }}
-                  <CDBSwitch checked />  
-                </div>
+              <Card.Title> {group.aGroupName} </Card.Title>
+              <div className="d-flex justify-content-end">
+                <CDBSwitch
+                  label="On/Off"
+                  checked={group.aGroupIsEnabled}
+                  onChange={event => handleGroupEnabled(event, group.id)}
+                />    
+              </div>
             </CDBCardBody>
           </CDBCard>))}
+
 
         {alarmsWithoutGroup.map(alarm => (
           <CDBCard 
@@ -66,25 +79,19 @@ function TestForm() {
             key={alarm.id} 
             className="mb-4">
             <CDBCardBody>
-              title={alarm.alarmName}
-                <div className="d-flex justify-content-center">
+              <Card.Title> {alarm.alarmName} </Card.Title>
+                <div className="d-flex justify-content-end">
                   <CDBSwitch
                     id={`alarm-${alarm.id}`}
                     label="On/Off"
                     checked={alarm.alarmIsEnabled}
-                    onChange={() => {
-                      axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/${alarm.id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
-                        .then(response => {
-                          setAlarms(alarms.map(a => a.id === alarm.id ? response.data : a));
-                        });
-                      }}
-                    />     
-                  <CDBSwitch checked />
+                    onChange={event => handleAlarmEnabled(event, alarm.id)}
+                  />     
+                  {/* <CDBSwitch checked /> */}
                 </div>
             </CDBCardBody>
           </CDBCard>))}
       </CDBContainer>
-    </>  
   );
 }
 

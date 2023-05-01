@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function NewAlarmGroup() {
   const [alarmGroupName, setAlarmGroupName] = useState('');
   const [savedAlarmGroups, setSavedAlarmGroups] = useState([]);
+  const navigate = useNavigate();
 
   const handleNameChange = (e) => {
     setAlarmGroupName(e.target.value);
@@ -15,17 +17,17 @@ function NewAlarmGroup() {
     };
 
   axios
-  .post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/", newAlarmGroup)
+  .post("https://primal-asset-385412.ue.r.appspot.com/alarmGroups/", newAlarmGroup)
+
   .then((res) => {
     let data = res.data;
     setSavedAlarmGroups([...savedAlarmGroups, data]);
-  })
-  .catch((err) => { });
+    setAlarmGroupName('');
+    navigate('/AlarmList');})
 
-  };
+  .catch((err) => { });};
+
   console.log(savedAlarmGroups);
-
-
 
   return (
     <>
@@ -35,10 +37,6 @@ function NewAlarmGroup() {
       <button onClick={handleSave}>Save</button>
     </>
   );
-
-
-
-
 }
 
 export default NewAlarmGroup;

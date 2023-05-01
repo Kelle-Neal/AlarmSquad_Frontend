@@ -1,16 +1,18 @@
 // ************* IMPORT TOOLS *************
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { FormControl } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { FormControl, FormGroup, Form,  } from 'react-bootstrap';
 import {
   CDBInput,
   CDBCard,
   CDBCardBody,
   CDBBtn,
   CDBContainer,
-  CDBDropDown,
-  CDBDropDownMenu,
-  CDBDropDownToggle,
+  // CDBDropDown,
+  // CDBDropDownMenu,
+  // CDBDropDownToggle,
+
 } from 'cdbreact';
 
 import CurrentTime from '../pieces/currentTime';
@@ -18,8 +20,8 @@ import CurrentDate from '../pieces/currentDate';
 
 // ************* CREATE FORM FUNCTION *************
 function TestForm() {
-  const [alarmTime, setAlarmTime] = useState("");
-  const [alarmGroup, setAlarmGroup] = useState('');
+  const [alarmTime, setAlarmTime] = useState('');
+  const [alarmGroup, setAlarmGroup] = useState(undefined);
   const [alarmGroups, setAlarmGroups] = useState([]);
   // const [ringtone, setRingtone] = useState('');
   // const [ringtones, setRingtones] = useState([]);
@@ -27,7 +29,9 @@ function TestForm() {
   const [savedAlarms, setSavedAlarms] = useState([]);
   // const [alarmAlert, setAlarmAlert] = useState([]);
   // const [isAlarmConfirmed, setIsAlarmConfirmed] = useState(false);
-  const [isAlarmActive, setIsAlarmActive] = useState(false);
+  const [alarmIsEnabled, setAlarmIsEnabled] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleNameChange = (e) => {
     setAlarmName(e.target.value);};
@@ -39,7 +43,7 @@ function TestForm() {
 
 // ************* GET ALARM GROUP DATA *************
   useEffect(() => {
-    axios.get("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarmGroups/")
+    axios.get("https://primal-asset-385412.ue.r.appspot.com/alarmGroups/")
       .then((response) => {
         setAlarmGroups(response.data);
       })
@@ -64,7 +68,7 @@ function TestForm() {
 // ************* CREATE NEW ALARM *************
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsAlarmActive(true);
+    setAlarmIsEnabled(true);
     // setIsAlarmConfirmed(true);
     const time = alarmTime;
     const newAlarm = {
@@ -72,27 +76,31 @@ function TestForm() {
       alarmTime: time,
       // ringtone: ringtone,
       alarmGroup: alarmGroup,
+      
+
     };
     console.log('newAlarm:', newAlarm);
 
 // ************* SAVE NEW ALARM *************
-  axios.post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarms/", newAlarm)
+  axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
   .then((res) => {
     let data = res.data;
     setSavedAlarms([...savedAlarms, data]);
     console.log('savedAlarms:', savedAlarms);
+    navigate('/AlarmList');
   })
+
   .catch((error) => {
     console.error('There was a problem submitting the form:', error);
   });
   };
  
-  const checkAlarm = (currentTime) => {
-    if (alarmTime === currentTime && isAlarmActive) {
+  const checkAlarm = useCallback((currentTime) => {
+    if (alarmTime === currentTime && alarmIsEnabled) {
       alert("It's Time!!");
-      setIsAlarmActive(false);
+      setAlarmIsEnabled(false);
     }
-  };
+  }, [alarmTime, alarmIsEnabled]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -101,13 +109,14 @@ function TestForm() {
       checkAlarm(currentTime);
     }, 1000);
     return () => clearInterval(interval);
-  }, [isAlarmActive],);
+  }, [alarmIsEnabled, checkAlarm],);
 
 
 // ************* CREATE FORM *************
   return (
     <>
-      <CDBContainer Center>
+      <CDBContainer
+        className="d-flex justify-content-center">
         <CDBCard style={{ width: '30rem' }}>
           <CDBCardBody className="mx-4">
             <div className="text-center mt-4 mb-2">
@@ -136,23 +145,20 @@ function TestForm() {
 
 {/* ************* ADD ALARM TO GROUP ************* */}
             <div>
-              <CDBDropDown>
-                <CDBDropDownToggle color="secondary" outline>
-                  Add to Group
-                </CDBDropDownToggle>
-                <CDBDropDownMenu>
-                  <FormControl
-                    as="select"
-                    value={alarmGroup}
-                    onChange={(event) => setAlarmGroup(event.target.value)}>
-                    {alarmGroups.map((group) => (
-                      <option key={group.id} value={group.id}>
-                        {group.aGroupName}
-                      </option>
-                    ))}
-                  </FormControl>
-                </CDBDropDownMenu>
-              </CDBDropDown>
+              <FormGroup>
+                <Form.Label>Alarm Group</Form.Label>
+                <FormControl
+                  as="select"
+                  value={alarmGroup}
+                  onChange={(event) => setAlarmGroup(event.target.value)}>
+                  <option value="">Select an alarm group</option>
+                  {alarmGroups.map((group) => (
+                    <option key={group.id} value={group.id}>
+                      {group.aGroupName}
+                    </option>
+                  ))}
+                </FormControl>
+              </FormGroup>
             </div>
             <br></br>
 
@@ -212,7 +218,7 @@ export default TestForm;
 
 // // ************* GET ALARM GROUP DATA *************
 // useEffect(() => {
-//   axios.get("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarmGroups/")
+//   axios.get("https://https://primal-asset-385412.ue.r.appspot.com/alarmGroups/")
 //     .then((response) => {
 //       setAlarmGroups(response.data);
 //     })
@@ -224,7 +230,7 @@ export default TestForm;
 
 // // ************* GET RINGTONE DATA *************
 // useEffect(() => {
-//   axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/ringtones/')
+//   axios.get('https://primal-asset-385412.ue.r.appspot.com/ringtones/')
 //     .then(response => {
 //       setRingtones(response.data);
 //     })
@@ -255,7 +261,7 @@ export default TestForm;
 //     audio.play();
 //   }
 
-//   axios.post("https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96b.gitpod.io/alarms/", newAlarm)
+//   axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
 //   .then((res) => {
 //     let data = res.data;
 //     setSavedAlarms([...savedAlarms, data]);

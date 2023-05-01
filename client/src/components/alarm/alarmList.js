@@ -5,23 +5,52 @@ import axios from 'axios';
 function AlarmList() {
   const [alarms, setAlarms] = useState([]);
   const [groups, setGroups] = useState([]);
-  
+  // const BASE_URL = 'https://primal-asset-385412.ue.r.appspot.com/'
+
+  // useEffect (() => {
+  //   const getAlarms = async () => {
+  //     let config = {
+  //       baseURL: BASE_URL,
+  //       url: '/alarms/',
+  //       method: 'get',
+  //     }
+  //     let response = await axios.request(config);
+  //     setAlarms(response.data);
+  //   }
+  //   getAlarms();
+
+  //   const getGroups = async () => {
+  //     let config = {
+  //       baseURL: BASE_URL,
+  //       url: '/alarmGroups/',
+  //       method: 'get',
+  //     }
+  //     let response = await axios.request(config);
+  //     setGroups(response.data);
+  //     }
+  //     getGroups();
+  //   }, [])
+
   useEffect(() => {
-    axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/')
+    axios.get('https://primal-asset-385412.ue.r.appspot.com/alarmGroups/')
       .then(response => {
         setGroups(response.data);});
-    axios.get('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/')
+
+    axios.get('https://primal-asset-385412.ue.r.appspot.com//alarms/')
       .then(response => {
         setAlarms(response.data);});}, []);
+
   const handleToggle = (event, id) => {
     event.preventDefault();
     const index = alarms.findIndex(alarm => alarm.id === id);
     const alarm = alarms[index];
-    axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled }).then(response => {
+    axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled }).then(response => {
       setAlarms([...alarms.slice(0, index), response.data, ...alarms.slice(index + 1)]);});};
+  
   const handleEdit = (event, id) => {
     event.preventDefault();
-    window.location.href = `https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/edit/`;};
+    window.location.href = `https://primal-asset-385412.ue.r.appspot.com/${id}/edit/`;};
+  
   const alarmsWithoutGroup = alarms.filter(alarm => !alarm.alarmGroup);
 
   return (
@@ -136,7 +165,7 @@ export default AlarmList;
 // import React, { useState, useEffect } from 'react';
 // import { CDBCard, CDBCardBody, CDBSwitch, CDBContainer } from 'cdbreact';
 // import axios from 'axios';
-// const BASE_URL = 'https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/api'
+// const BASE_URL = 'https://primal-asset-385412.ue.r.appspot.com/'
 
 // function TestForm() {
 //   const [alarms, setAlarms] = useState([]);
@@ -169,7 +198,7 @@ export default AlarmList;
 //   //   event.preventDefault();
 //   //   const index = alarms.findIndex(alarm => alarm.id === id);
 //   //   const alarm = alarms[index];
-//   //   axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
+//   //   axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
 //   //     .then(response => {
 //   //       setAlarms([...alarms.slice(0, index), response.data, ...alarms.slice(index + 1)]);
 //   //     });
@@ -177,14 +206,15 @@ export default AlarmList;
 
 //   // const handleEdit = (event, id) => {
 //   //   event.preventDefault();
-//   //   window.location.href = `https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/edit/`;
+//   //   window.location.href = `https://primal-asset-385412.ue.r.appspot.com/alarms/${id}/edit/`;
 //   // };
 
 //   const alarmsWithoutGroup = alarms.filter(alarm => !alarm.alarmGroup);
 
 //   return (
 //     <>
-//       <CDBContainer>
+          // <CDBContainer
+          //   className="d-flex justify-content-center">
 //         {groups.map(group => (
 //           <CDBCard 
 //             style={{ width: "25rem" }}
@@ -198,7 +228,7 @@ export default AlarmList;
 //                     label="On/Off"
 //                     checked={group.alarmGroupIsEnabled}
 //                     onChange={() => {
-//                       axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/${group.id}/`, { alarmGroupIsEnabled: !group.alarmGroupIsEnabled })
+//                       axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarmGroups/${group.id}/`, { alarmGroupIsEnabled: !group.alarmGroupIsEnabled })
 //                         .then(response => {
 //                           setGroups(groups.map(g => g.id === group.id ? response.data : g));
 //                         });
@@ -221,7 +251,7 @@ export default AlarmList;
 //                     label="On/Off"
 //                     checked={alarm.alarmIsEnabled}
 //                     onChange={() => {
-//                       axios.patch(`https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/${alarm.id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
+//                       axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarmGroups/${alarm.id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
 //                         .then(response => {
 //                           setAlarms(alarms.map(a => a.id === alarm.id ? response.data : a));
 //                         });
