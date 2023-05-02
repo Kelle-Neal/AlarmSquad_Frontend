@@ -31,6 +31,14 @@ function FormNewAlarm() {
   //   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
   // };  
 
+  const resetForm = () => {
+    setAlarmTime('');
+    setAlarmGroup(undefined);
+    setAlarmName('');
+    setAlarmIsEnabled(false);
+  };
+  
+
 // ************* GET ALARM GROUP DATA *************
   useEffect(() => {
     axios.get("https://primal-asset-385412.ue.r.appspot.com/alarmGroups/")
@@ -102,6 +110,7 @@ axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
   setSavedAlarms([...savedAlarms, data]);
   console.log('savedAlarms:', savedAlarms);
   navigate('/FormNewAlarm');
+  resetForm();
 })
 
 .catch((error) => {
@@ -197,12 +206,13 @@ axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
                   onClick={handleAddAnother}
                   color="none"
                   style={{
-                    width: '30%',
+                    width: '60%',
                     background:
                       'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
                   className="btn-block mx-0">
                   Save & Add Another
                 </CDBBtn>
+              </Row>  
             </div>
             <br></br>
           </CDBCardBody>
