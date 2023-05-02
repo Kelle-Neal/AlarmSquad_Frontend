@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image, Row } from 'react-bootstrap';
 import {
   CDBInput,
   CDBCard,
@@ -7,6 +8,8 @@ import {
   CDBBtn,
   CDBContainer,
 } from 'cdbreact';
+import Logo from '../img/AlarmSquad.png';
+
 
 
 function FormRegister() {
@@ -23,9 +26,10 @@ function FormRegister() {
       className="d-flex justify-content-center">
         <CDBCard style={{ width: '30rem' }}>
           <CDBCardBody className="mx-4">
-            <div className="text-center mt-4 mb-2">
-              <p className="h4"> Register </p>
-            </div>
+            <Row className="text-center mt-4 mb-2">
+              <Image src={Logo} />
+              <h4> Register </h4>
+            </Row>
             <CDBInput label="First Name" type="text" />
             <CDBInput label="Last Name" type="text" />
             <CDBInput label="Username" type="text" />

@@ -2,24 +2,14 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
-import { FormControl, FormGroup, Form,  } from 'react-bootstrap';
-import {
-  CDBInput,
-  CDBCard,
-  CDBCardBody,
-  CDBBtn,
-  CDBContainer,
-  // CDBDropDown,
-  // CDBDropDownMenu,
-  // CDBDropDownToggle,
-
-} from 'cdbreact';
-
+import { FormControl, FormGroup, Form, Row, Image } from 'react-bootstrap';
+import { CDBInput, CDBCard, CDBCardBody, CDBBtn, CDBContainer } from 'cdbreact';
 import CurrentTime from '../pieces/currentTime';
 import CurrentDate from '../pieces/currentDate';
+import Logo from '../img/AlarmSquad.png';
 
 // ************* CREATE FORM FUNCTION *************
-function TestForm() {
+function FormNewAlarm() {
   const [alarmTime, setAlarmTime] = useState('');
   const [alarmGroup, setAlarmGroup] = useState(undefined);
   const [alarmGroups, setAlarmGroups] = useState([]);
@@ -119,11 +109,12 @@ function TestForm() {
         className="d-flex justify-content-center">
         <CDBCard style={{ width: '30rem' }}>
           <CDBCardBody className="mx-4">
-            <div className="text-center mt-4 mb-2">
-              <p className="h4"> Create New Alarm </p>
+            <Row className="text-center mt-4 mb-2">
+              <Image src={Logo} />              
+              <p className="fw-bold h4"> Create New Alarm </p>
               <CurrentTime />
               <CurrentDate />
-            </div>
+            </Row>
 {/* ************* ALARM NAME ************* */}
             <div>
               <CDBInput 
@@ -182,7 +173,7 @@ function TestForm() {
     </>  
   );
 } 
-export default TestForm;
+export default FormNewAlarm;
 
 
 

@@ -1,98 +1,156 @@
-import React, { useState, useEffect } from 'react';
-import { CDBCard, CDBCardBody, CDBSwitch, CDBContainer } from 'cdbreact';
-import Card from 'react-bootstrap/Card';
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { FormControl, FormGroup, Form, Row, Image } from 'react-bootstrap';
+import { CDBInput, CDBCard, CDBCardBody, CDBBtn, CDBContainer } from 'cdbreact';
+import CurrentTime from './components/pieces/currentTime';
+import CurrentDate from './components/pieces/currentDate';
+import Logo from './components/img/AlarmSquad.png';
 
 function TestForm() {
-  const [alarms, setAlarms] = useState([]);
-  const [groups, setGroups] = useState([]);
+  const [alarm, setAlarm] = useState({});
+  const [alarmTime, setAlarmTime] = useState('');
+  const [alarmGroup, setAlarmGroup] = useState('');
+  const [alarmGroups, setAlarmGroups] = useState([]);
+  const [alarmName, setAlarmName] = useState('');
+  const [alarmIsEnabled, setAlarmIsEnabled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const alarmId = params.get('alarmId');
+
+  const handleNameChange = (e) => {
+    setAlarmName(e.target.value);
+  };
 
   useEffect(() => {
-    axios.get('https://primal-asset-385412.ue.r.appspot.com/alarmGroups/')
-      .then(response => {
-        setGroups(response.data);
+    axios.get(`https://primal-asset-385412.ue.r.appspot.com/alarms/${alarmId}/`)
+      .then((response) => {
+        setAlarm(response.data);
+        setAlarmTime(response.data.alarmTime);
+        setAlarmName(response.data.alarmName);
+        setAlarmGroup(response.data.alarmGroup);
+      })
+      .catch((error) => {
+        console.error(`Error fetching alarm with id ${alarmId}:`, error);
       });
-    axios.get('https://primal-asset-385412.ue.r.appspot.com/alarms/')
-      .then(response => {
-        setAlarms(response.data);
+  }, [alarmId]);
+
+  useEffect(() => {
+    axios.get("https://primal-asset-385412.ue.r.appspot.com/alarmGroups/")
+      .then((response) => {
+        setAlarmGroups(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching alarm groups:", error);
       });
   }, []);
 
-    const handleAlarmEnabled = (event, id) => {
-      event.preventDefault();
-      const index = alarms.findIndex(alarm => alarm.id === id);
-      const alarm = alarms[index];
-      axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarms/${id}/`, { alarmIsEnabled: !alarm.alarmIsEnabled })
-        .then(response => {
-          setAlarms([...alarms.slice(0, index), response.data, ...alarms.slice(index + 1)]);
-        });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setAlarmIsEnabled(true);
+    const updatedAlarm = {
+      alarmName: alarmName,
+      alarmTime: alarmTime,
+      alarmGroup: alarmGroup,
     };
+    console.log('updatedAlarm:', updatedAlarm);
+    axios.put(`https://primal-asset-385412.ue.r.appspot.com/alarms/${alarmId}/`, updatedAlarm)
+      .then((res) => {
+        let data = res.data;
+        setAlarm(data);
+        navigate('/AlarmList');
+      })
+      .catch((error) => {
+        console.error(`There was a problem updating the alarm with id ${alarmId}:`, error);
+      });
+  };
 
-    const handleGroupEnabled = (event, id) => {
-      event.preventDefault();
-      const index = groups.findIndex(group => group.id === id);
-      const group = groups[index];
-      axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarmGroups/${id}/`, { aGroupIsEnabled: !group.aGroupIsEnabled })
-        .then(response => {
-          setGroups([...groups.slice(0, index), response.data, ...groups.slice(index + 1)]);
-        });
-    };
+  const checkAlarm = useCallback((currentTime) => {
+    if (alarmTime === currentTime && alarmIsEnabled) {
+      alert("It's Time!!");
+      setAlarmIsEnabled(false);
+    }
+  }, [alarmTime, alarmIsEnabled]);
 
-    // axios.patch(`https://primal-asset-385412.ue.r.appspot.com/alarmGroups/${group.id}/`, { alarmGroupIsEnabled: !group.alarmGroupIsEnabled })
-    //   .then(response => {
-    //     setGroups(groups.map(g => g.id === group.id ? response.data : g));
-    //   });
-  
-
-
-
-  // const handleEdit = (event, id) => {
-  //   event.preventDefault();
-  //   window.location.href = `https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarms/${id}/edit/`;
-  // };
-
-  const alarmsWithoutGroup = alarms.filter(alarm => !alarm.alarmGroup);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const d = <CurrentTime />;
+      const currentTime = d;
+      checkAlarm(currentTime);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [alarmIsEnabled, checkAlarm]);
 
   return (
+    <>
       <CDBContainer
-        className="justify-content-center">
-        {groups.map(group => (
-          <CDBCard 
-            key={`group-${group.id}`}
-            style={{ width: "25rem" }} border>
-            <CDBCardBody>
-              <Card.Title> {group.aGroupName} </Card.Title>
-              <div className="d-flex justify-content-end">
-                <CDBSwitch
-                  label="On/Off"
-                  checked={group.aGroupIsEnabled}
-                  onChange={event => handleGroupEnabled(event, group.id)}
-                />    
-              </div>
-            </CDBCardBody>
-          </CDBCard>))}
+        className="d-flex justify-content-center">
+        <CDBCard style={{ width: '30rem' }}>
+          <CDBCardBody className="mx-4">
+            <Row className="text-center mt-4 mb-2">
+              <Image src={Logo} />              
+              <p className="fw-bold h4"> Edit Alarm </p>
+              <CurrentTime />
+              <CurrentDate />
+            </Row>
+{/* ************* ALARM NAME ************* */}
+            <div key={`alarm-${alarm.id}`}>
+              <CDBInput 
+                label="Alarm Name" 
+                type="text" 
+                id={`alarm-${alarm.id}`}
+                value={alarmName}
+                onChange={handleNameChange} />
+            </div>
+{/* ************* ALARM TIME ************* */}
+            <div>
+              <CDBInput
+                type="time"
+                id={`alarm-${alarm.id}`}
+                value={alarmTime}
+                onChange={(e) => setAlarmTime(e.target.value)}
+              />
+            </div>
+{/* ************* ADD ALARM TO GROUP ************* */}
+            <div>
+              <FormGroup>
+                <Form.Label>Alarm Group</Form.Label>
+                <FormControl
+                  as="select"
+                  id={`alarm-${alarm.id}`}
+                  value={alarmGroup}
+                  onChange={(event) => setAlarmGroup(event.target.value)}>
+                  <option value="">Select an alarm group</option>
+                  {alarmGroups.map((group) => (
+                    <option key={group.id} value={group.id}>
+                      {group.aGroupName}
+                    </option>
+                  ))}
+                </FormControl>
+              </FormGroup>
+            </div>
+            <br></br>
 
-
-        {alarmsWithoutGroup.map(alarm => (
-          <CDBCard 
-            style={{ width: "25rem" }}
-            key={alarm.id} 
-            className="mb-4">
-            <CDBCardBody>
-              <Card.Title> {alarm.alarmName} </Card.Title>
-                <div className="d-flex justify-content-end">
-                  <CDBSwitch
-                    id={`alarm-${alarm.id}`}
-                    label="On/Off"
-                    checked={alarm.alarmIsEnabled}
-                    onChange={event => handleAlarmEnabled(event, alarm.id)}
-                  />     
-                  {/* <CDBSwitch checked /> */}
-                </div>
-            </CDBCardBody>
-          </CDBCard>))}
+{/* ************* SAVE ALARM ************* */}
+            <div>
+              <CDBBtn
+                onClick={handleSubmit}
+                color="none"
+                style={{
+                  width: '30%',
+                  background:
+                    'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
+                className="btn-block mx-0">
+                Update Alarm
+              </CDBBtn>
+            </div>
+            <br></br>
+          </CDBCardBody>
+        </CDBCard>
       </CDBContainer>
+    </>  
   );
-}
-
+} 
+ 
 export default TestForm;

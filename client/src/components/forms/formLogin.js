@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import AuthService from "../../services/auth.service";
 import { useNavigate } from 'react-router-dom';
+import { Image, Row } from 'react-bootstrap';
 import { useGlobalState } from "../../context/GlobalState";
 import jwtDecode from "jwt-decode";
 import {
@@ -11,6 +12,8 @@ import {
   CDBBtn,
   CDBContainer,
 } from 'cdbreact';
+import Logo from '../img/AlarmSquad.png';
+
 
 function FormLogin() {
   const [, dispatch ] = useGlobalState();
@@ -22,8 +25,6 @@ function FormLogin() {
   // const BASE_URL = 'https://primal-asset-385412.ue.r.appspot.com/'
   const handleLogin = (e) => {
     e.preventDefault();
-  };
-
   AuthService
     .login(username, password)
     .then(async (resp) => {
@@ -34,16 +35,19 @@ function FormLogin() {
       })
       navigate('/AlarmList')
     });
-  
+ 
+  };
+
 
   return (
     <CDBContainer
       className="d-flex justify-content-center">
       <CDBCard style={{ width: '30rem' }}>
         <CDBCardBody className="mx-4">
-          <div className="text-center mt-4 mb-2">
-            <p className="h4"> Login </p>
-          </div>
+          <Row className="text-center mt-4 mb-2">
+            <Image src={Logo} />
+            <h4> Login </h4>
+          </Row>
 
           <CDBInput 
             label="E-mail" 
