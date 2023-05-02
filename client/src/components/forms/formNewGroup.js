@@ -57,9 +57,10 @@ function FormNewGroup() {
                 value={alarmGroupName}
                 onChange={handleNameChange} />
             </div>
+            <br></br>
 
 {/* ************* SAVE GROUP ************* */}
-            <div>
+            <div className= "d-flex align-items-center justify-content-center">
               <CDBBtn
                 onClick={handleSave}
                 color="none"

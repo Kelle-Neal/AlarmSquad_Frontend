@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CDBSwitch, CDBCard } from 'cdbreact';
-import { Stack, Button, Row, Container, Image } from 'react-bootstrap';
+import { CDBSwitch, CDBCard, CDBBtn } from 'cdbreact';
+import { Stack, Button, Row, Container, Image, Col } from 'react-bootstrap';
+
 import axios from 'axios';
 import CurrentTime from '../pieces/currentTime';
 import CurrentDate from '../pieces/currentDate';
@@ -58,8 +59,14 @@ function AlarmDashboard() {
     //   .then(response => {
     //     setGroups(groups.map(g => g.id === group.id ? response.data : g));
     //   });
-  
 
+    const handleAddAlarm = () => {
+      navigate("/FormNewAlarm");
+    }
+
+    const handleAddGroup = () => {
+      navigate("/FormNewGroup");
+    }
 
 
   // const handleEdit = (event, id) => {
@@ -104,7 +111,8 @@ function AlarmDashboard() {
                   </Stack>
                 </div>))}  
             </div>
-            
+          </Row>
+          <Row>  
             <div>
               {alarmsWithoutGroup.map(alarm => (
                 <div key={`alarm-${alarm.id}`} style={{ borderTop: "1px solid purple"}}>
@@ -131,6 +139,30 @@ function AlarmDashboard() {
                 </div>))}  
             </div> 
           </Row>
+          <Row className="d-flex align-items-center justify-content-center">
+            <Col>
+                <CDBBtn
+                  onClick={handleAddAlarm}
+                  color="none"
+                  style={{
+                    background:
+                      'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
+                  className="btn-block mx-0">
+                  Add Alarm
+                </CDBBtn>
+              </Col>
+              <Col className="text-end">
+                <CDBBtn
+                  onClick={handleAddGroup}
+                  color="none"
+                  style={{
+                    background:
+                      'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
+                  className="btn-block mx-0">
+                  Add Group
+                </CDBBtn>
+              </Col>
+          </Row>  
         </CDBCard>  
       </Container> 
     </>  

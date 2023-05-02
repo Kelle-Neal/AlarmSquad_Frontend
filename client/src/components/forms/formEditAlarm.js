@@ -132,7 +132,7 @@ function FormEditAlarm() {
             <br></br>
 
 {/* ************* SAVE ALARM ************* */}
-            <div>
+            <div className="d-flex align-items-center justify-content-center">
               <CDBBtn
                 onClick={handleSubmit}
                 color="none"

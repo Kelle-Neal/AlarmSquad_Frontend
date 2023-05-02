@@ -31,14 +31,6 @@ function FormNewAlarm() {
   //   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
   // };  
 
-  const resetForm = () => {
-    setAlarmTime('');
-    setAlarmGroup(undefined);
-    setAlarmName('');
-    setAlarmIsEnabled(false);
-  };
-  
-
 // ************* GET ALARM GROUP DATA *************
   useEffect(() => {
     axios.get("https://primal-asset-385412.ue.r.appspot.com/alarmGroups/")
@@ -91,32 +83,28 @@ function FormNewAlarm() {
   };
  
 // ************* CREATE NEW ALARM & ADD ANOTHER *************
-const handleAddAnother = (event) => {
-  event.preventDefault();
-  setAlarmIsEnabled(true);
-  // setIsAlarmConfirmed(true);
-  const time = alarmTime;
-  const newAlarm = {
-    alarmName: alarmName,
-    alarmTime: time,
-    // ringtone: ringtone,
-    alarmGroup: alarmGroup,
-  };
-  console.log('newAlarm:', newAlarm);
+// const handleAddAnother = (e) => {
+//   setAlarmIsEnabled(true);
+//   // setIsAlarmConfirmed(true);
+//   const time = alarmTime;
+//   const newAlarm = {
+//     alarmName: alarmName,
+//     alarmTime: time,
+//     // ringtone: ringtone,
+//     alarmGroup: alarmGroup,
+//   };
+//   console.log('newAlarm:', newAlarm);
 
-axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
-.then((res) => {
-  let data = res.data;
-  setSavedAlarms([...savedAlarms, data]);
-  console.log('savedAlarms:', savedAlarms);
-  navigate('/FormNewAlarm');
-  resetForm();
-})
+//   axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
+//   .then((res) => {
+//     e.preventDefault();
+//     let data = res.data;
+//     setSavedAlarms([...savedAlarms, data]);
+//   })
 
-.catch((error) => {
-  console.error('There was a problem submitting the form:', error);
-});
-};
+//   .catch((error) => {
+//     console.error('There was a problem submitting the form:', error);});
+// };
 
 
 // ************* CHECK FOR ALARM ALERT *************
@@ -191,7 +179,7 @@ axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
 
 {/* ************* SAVE ALARM ************* */}
             <div>
-              <Row>
+              <Row className= "d-flex align-items-center justify-content-center">
                 <CDBBtn
                   onClick={handleSave}
                   color="none"
@@ -200,9 +188,9 @@ axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
                     background:
                       'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
                   className="btn-block mx-0">
-                  SAVE ALARM
+                  Save Alarm
                 </CDBBtn>
-                <CDBBtn
+                {/* <CDBBtn
                   onClick={handleAddAnother}
                   color="none"
                   style={{
@@ -211,7 +199,7 @@ axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
                       'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
                   className="btn-block mx-0">
                   Save & Add Another
-                </CDBBtn>
+                </CDBBtn> */}
               </Row>  
             </div>
             <br></br>
