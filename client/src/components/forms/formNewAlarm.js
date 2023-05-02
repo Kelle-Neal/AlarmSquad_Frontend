@@ -56,7 +56,7 @@ function FormNewAlarm() {
 // console.log('ringtones:', ringtones);
 
 // ************* CREATE NEW ALARM *************
-  const handleSubmit = (event) => {
+  const handleSave = (event) => {
     event.preventDefault();
     setAlarmIsEnabled(true);
     // setIsAlarmConfirmed(true);
@@ -66,18 +66,15 @@ function FormNewAlarm() {
       alarmTime: time,
       // ringtone: ringtone,
       alarmGroup: alarmGroup,
-      
-
     };
     console.log('newAlarm:', newAlarm);
 
-// ************* SAVE NEW ALARM *************
   axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
   .then((res) => {
     let data = res.data;
     setSavedAlarms([...savedAlarms, data]);
     console.log('savedAlarms:', savedAlarms);
-    navigate('/Alarms');
+    navigate('/AlarmDashboard');
   })
 
   .catch((error) => {
@@ -85,6 +82,36 @@ function FormNewAlarm() {
   });
   };
  
+// ************* CREATE NEW ALARM & ADD ANOTHER *************
+const handleAddAnother = (event) => {
+  event.preventDefault();
+  setAlarmIsEnabled(true);
+  // setIsAlarmConfirmed(true);
+  const time = alarmTime;
+  const newAlarm = {
+    alarmName: alarmName,
+    alarmTime: time,
+    // ringtone: ringtone,
+    alarmGroup: alarmGroup,
+  };
+  console.log('newAlarm:', newAlarm);
+
+axios.post("https://primal-asset-385412.ue.r.appspot.com/alarms/", newAlarm)
+.then((res) => {
+  let data = res.data;
+  setSavedAlarms([...savedAlarms, data]);
+  console.log('savedAlarms:', savedAlarms);
+  navigate('/FormNewAlarm');
+})
+
+.catch((error) => {
+  console.error('There was a problem submitting the form:', error);
+});
+};
+
+
+// ************* CHECK FOR ALARM ALERT *************
+
   const checkAlarm = useCallback((currentTime) => {
     if (alarmTime === currentTime && alarmIsEnabled) {
       alert("It's Time!!");
@@ -155,16 +182,27 @@ function FormNewAlarm() {
 
 {/* ************* SAVE ALARM ************* */}
             <div>
-              <CDBBtn
-                onClick={handleSubmit}
-                color="none"
-                style={{
-                  width: '30%',
-                  background:
-                    'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
-                className="btn-block mx-0">
-                Save Alarm
-              </CDBBtn>
+              <Row>
+                <CDBBtn
+                  onClick={handleSave}
+                  color="none"
+                  style={{
+                    width: '30%',
+                    background:
+                      'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
+                  className="btn-block mx-0">
+                  SAVE ALARM
+                </CDBBtn>
+                <CDBBtn
+                  onClick={handleAddAnother}
+                  color="none"
+                  style={{
+                    width: '30%',
+                    background:
+                      'linear-gradient(0deg, rgba(37,212,214,1) 0%, rgba(110,112,200,1) 100%)',}}
+                  className="btn-block mx-0">
+                  Save & Add Another
+                </CDBBtn>
             </div>
             <br></br>
           </CDBCardBody>
