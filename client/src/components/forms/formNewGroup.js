@@ -28,7 +28,7 @@ function FormNewGroup() {
     let data = res.data;
     setSavedAlarmGroups([...savedAlarmGroups, data]);
     setAlarmGroupName('');
-    navigate('/AlarmList');})
+    navigate('/FormNewAlarm');})
 
   .catch((err) => { });};
 
@@ -44,7 +44,7 @@ function FormNewGroup() {
           <CDBCardBody className="mx-4">
             <Row className="text-center mt-4 mb-2">
               <Image src={Logo} />              
-              <p className="fw-bold h4"> Create New Alarm </p>
+              <p className="fw-bold h4"> Create New Group </p>
               <CurrentTime />
               <CurrentDate />
             </Row>

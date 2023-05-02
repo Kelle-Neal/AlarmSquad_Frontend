@@ -77,7 +77,7 @@ function FormNewAlarm() {
     let data = res.data;
     setSavedAlarms([...savedAlarms, data]);
     console.log('savedAlarms:', savedAlarms);
-    navigate('/AlarmList');
+    navigate('/Alarms');
   })
 
   .catch((error) => {
