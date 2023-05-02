@@ -14,7 +14,7 @@ function CurrentDate() {
   }, []);
   return (
     <span>
-      {date.toLocaleDateString([], { month: 'long', day: 'numeric', year: 'numeric' })}
+      <h4>{date.toLocaleDateString([], { month: 'long', day: 'numeric', year: 'numeric' })}</h4>
     </span>
   );
 }

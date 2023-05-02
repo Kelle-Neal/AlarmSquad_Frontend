@@ -5,7 +5,7 @@ function SelectAlarmGroup() {
   const [alarmGroups, setAlarmGroups] = useState([]);
 
   useEffect(() => {
-    fetch('https://8000-kelleneal-alarmsquadbac-yyrhi6kbgi2.ws-us96.gitpod.io/alarmGroups/')
+    fetch('https://primal-asset-385412.ue.r.appspot.com/alarmGroups/')
       .then(response => response.json())
       .then(data => setAlarmGroups(data))
       .catch(error => console.error(error));

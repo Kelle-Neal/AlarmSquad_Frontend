@@ -10,7 +10,7 @@ function Home () {
           alt="AlarmSquad Logo"
           src={ Logo }
           className= 'img-responsive'
-          width={'75%'}
+          style={{ width: '50rem' }}
         />  
       </div>
     </>
