@@ -97,7 +97,7 @@ function AlarmDashboard() {
                       className="fs-4 text-start" 
                       variant="light"
                       id={`group-${group.id}`}
-                      onClick={handleEditGroup}
+                      onClick={() => handleEditGroup(group)}
                       > {group.aGroupName} </Button>
                       <div className="d-flex justify-content-end">
                         <CDBSwitch
